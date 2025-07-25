@@ -3,7 +3,7 @@ import React from 'react'
 const UserCard = ({user}) => {
   return (
     <div>
-      <div className="card flex py-auto mx-auto bg-base-100 w-96 shadow-sm">
+      <div className="card flex my-40  bg-base-300 w-96 shadow-sm">
   <figure>
     <img
       src={user.photoUrl}
@@ -11,6 +11,7 @@ const UserCard = ({user}) => {
   </figure>
   <div className="card-body">
     <h2 className="card-title">{user.firstName}</h2>
+    <h2 className="card-title">{user.lastName}</h2>
     <p>{user.bio}</p>
     <div className="card-actions justify-center">
       <button className="btn btn-primary">Accept</button>
