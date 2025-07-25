@@ -14,6 +14,7 @@ const EditProfile = ({user}) => {
         const [ lastName, setLastName ] = useState(user?.lastName);
         const [ photoUrl, setPhotoUrl ] = useState(user?.photoUrl);
         const [ bio, setBio ] = useState(user?.bio);
+        const [ toast, showToast] = useState(false)
 
      const handleSave = async () => {
       try{
@@ -22,6 +23,10 @@ const EditProfile = ({user}) => {
       },{withCredentials: true})
 
       dispatch(addUser(res?.data?.data))
+      showToast(true)
+      setTimeout(()=>{
+        showToast(false)
+      },3000)
       }catch(err){
         console.log(err)
       }
@@ -30,7 +35,13 @@ const EditProfile = ({user}) => {
     }
   return (
     <>
+       
      <div className='flex justify-center'>
+         {toast && <div className="toast toast-top toast-center py-30">
+            <div className="alert alert-success">
+                <span>Profile updated successfully!!</span>
+            </div>
+        </div>}
       <div className='flex  mr-20 my-40'>
         <div className="card card-border bg-base-300 w-96 ">
             <div className="card-body">
