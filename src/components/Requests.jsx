@@ -1,12 +1,18 @@
 import React, { useEffect } from 'react'
 import axios from 'axios'
 import { BASE_URL } from '../utils/constants'
-import { addRequests } from '../utils/requestsSlice'
+import { addRequests, removeRequests } from '../utils/requestsSlice'
 import { useDispatch, useSelector } from 'react-redux'
 
 const Requests = () => {
   const requestsReceived = useSelector(store => store.requests)
   const dispatch = useDispatch()
+  const handleStatus = async(status, _id) => {
+    const res = await axios.post(BASE_URL+"request/review/"+status+"/"+_id, {}, {
+      withCredentials:true
+    })
+    dispatch(removeRequests(_id))
+  }
   const fetchRequests = async() => {
     try{
       const res = await axios.get(BASE_URL+"user/requests/received", {withCredentials: true})
@@ -36,8 +42,8 @@ const Requests = () => {
                     <h2 className='font-bold text-xl'>{firstName+ " " + lastName}</h2>
                     <h1>{bio}</h1>
                 </div>
-                <button className="btn btn-accent mx-2">Accept</button>
-                <button className="btn btn-error mx-2">Reject</button>
+                <button className="btn btn-accent mx-2" onClick={()=>handleStatus("accepted", connection._id)}>Accept</button>
+                <button className="btn btn-error mx-2" onClick={()=>handleStatus("rejected", connection._id)}>Reject</button>
             </div>
         )
       
